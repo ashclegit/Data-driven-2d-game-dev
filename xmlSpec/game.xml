@@ -1,0 +1,128 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<title>The Tracker Framework</title>
+<maxStringSize>50</maxStringSize>
+
+<frameCapOn>true</frameCapOn>
+<period>17</period>
+
+<maxFrames>300</maxFrames>
+<username>aashwin</username>
+
+<view>
+  <width>854</width>
+  <height>480</height>
+</view>
+
+<world>
+  <width>2000</width>
+  <height>600</height>
+</world>
+
+<snowhill>
+  <file>assets/snowhillfull.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</snowhill>
+
+<trees>
+  <file>assets/treesfull.png</file>
+  <factor>2</factor>
+  <transparency>false</transparency>
+</trees>
+
+<font name="font">
+  <file>fonts/arial.ttf</file>
+  <size>24</size>
+  <red>255</red>
+  <green>0</green>
+  <blue>0</blue>
+  <alpha>0</alpha>
+</font>
+
+<hudColor name="hudColor">
+  <file>fonts/arial.ttf</file>
+  <size>24</size>
+  <red>0</red>
+  <green>255</green>
+  <blue>0</blue>
+  <alpha>100</alpha>
+</hudColor>
+
+<hudLayout name="hudLayout">
+  <w>250</w>
+  <h>300</h>
+  <xpos>575</xpos>
+  <ypos>20</ypos>
+  <text> Player Controls </text>
+  <right> d -> right </right>
+  <left> a -> left </left>
+  <up> w -> up </up>
+  <down> s -> down </down>
+</hudLayout>
+
+<Fighter>
+  <file>assets/fighter.png</file>
+  <startLoc x="100" y="250"/>
+  <frames>5</frames>
+  <imageWidth>166</imageWidth>
+  <imageHeight>222</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>250</speedX>
+  <speedY>250</speedY>
+  <transparency>false</transparency>
+</Fighter>
+
+<FighterLeft>
+  <file>assets/leftfighter.png</file>
+  <startLoc x="100" y="250"/>
+  <frames>5</frames>
+  <imageWidth>168</imageWidth>
+  <imageHeight>222</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>250</speedX>
+  <speedY>250</speedY>
+  <transparency>false</transparency>
+</FighterLeft>
+
+<FlyingBird>
+  <file>assets/bird.png</file>
+  <startLoc x="450" y="65"/>
+  <frames>3</frames>
+  <imageWidth>75</imageWidth>
+  <imageHeight>58</imageHeight>
+  <frameInterval>50</frameInterval>
+  <speedX>250</speedX>
+  <speedY>250</speedY>
+  <safeDistance>100</safeDistance>
+  <transparency>false</transparency>
+</FlyingBird>
+
+
+
+<FlyingBirdLeft>
+  <file>assets/leftbird.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>3</frames>
+  <imageWidth>75</imageWidth>
+  <imageHeight>58</imageHeight>
+  <frameInterval>50</frameInterval>
+  <speedX>250</speedX>
+  <speedY>250</speedY>
+  <transparency>false</transparency>
+</FlyingBirdLeft>
+
+<Ball>
+  <file>assets/ball.png</file>
+  <startLoc x="65" y="145"/>
+  <imageWidth>75</imageWidth>
+  <imageHeight>58</imageHeight>
+  <speedX>50</speedX>
+  <speedY>50</speedY>
+  <safeDistance>100</safeDistance>
+  <transparency>false</transparency>
+</Ball>
+
+</GameData>
