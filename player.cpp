@@ -1,19 +1,19 @@
 #include "player.h"
 
 Player::Player( const std::string& name) :
-  MultiSprite(name),
+  TwoWaySprite(name),
   collision(false),
   initialVelocity(getVelocity())
 { }
 
 Player::Player(const Player& s) :
-  MultiSprite(s), 
+  TwoWaySprite(s), 
   collision(s.collision),
   initialVelocity(s.getVelocity())
   { }
 
 Player& Player::operator=(const Player& s) {
-  MultiSprite::operator=(s);
+  TwoWaySprite::operator=(s);
   collision = s.collision;
   initialVelocity = s.initialVelocity;
   return *this;
@@ -26,11 +26,13 @@ void Player::stop() {
 void Player::right() { 
   if ( getX() < worldWidth-getScaledWidth()) {
     setVelocityX(initialVelocity[0]);
+    TwoWaySprite::images = TwoWaySprite::imagesRight;
   }
 } 
 void Player::left()  { 
   if ( getX() > 0) {
     setVelocityX(-initialVelocity[0]);
+    TwoWaySprite::images = TwoWaySprite::imagesLeft;
   }
 } 
 void Player::up()    { 
@@ -45,11 +47,18 @@ void Player::down()  {
 }
 
 void Player::update(Uint32 ticks) {
-  if ( !collision ) advanceFrame(ticks);
+  if (getVelocityX() == 0 && getVelocityY() == 0)
+  {
+    stop();
+  }
+  else
+  {
+    if ( !collision ) advanceFrame(ticks);
 
-  Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
-  setPosition(getPosition() + incr);
+    Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+    setPosition(getPosition() + incr);
 
-  stop();
+    stop();
+  }
 }
 

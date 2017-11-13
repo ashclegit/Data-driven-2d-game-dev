@@ -10,15 +10,23 @@ void MultiSprite::advanceFrame(Uint32 ticks) {
 	}
 }
 
+Vector2f MultiSprite::makeVelocity(int vx, int vy) const {
+  float newvx = Gamedata::getInstance().getRandFloat(vx-50,vx+50);;
+  float newvy = Gamedata::getInstance().getRandFloat(vy-50,vy+50);;
+  newvx *= [](){ if(rand()%2) return -1; else return 1; }();
+  newvy *= [](){ if(rand()%2) return -1; else return 1; }();
+
+  return Vector2f(newvx, newvy);
+}
+
 MultiSprite::MultiSprite( const std::string& name) :
   Drawable(name, 
            Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), 
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")), 
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
+           makeVelocity(Gamedata::getInstance().getXmlInt(name+"/speedX"),
                     Gamedata::getInstance().getXmlInt(name+"/speedY"))
            ),
   images( RenderContext::getInstance()->getImages(name) ),
-  //imagesLeft(RenderContext::getInstance()->getImages(name+"Left")),
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
@@ -42,7 +50,6 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
 MultiSprite& MultiSprite::operator=(const MultiSprite& s) {
   Drawable::operator=(s);
   images = (s.images);
-  //imagesLeft = (s.imagesLeft);
   currentFrame = (s.currentFrame);
   numberOfFrames = ( s.numberOfFrames );
   frameInterval = ( s.frameInterval );
@@ -71,11 +78,9 @@ void MultiSprite::update(Uint32 ticks) {
 
   if ( getX() < 0) {
     setVelocityX( fabs( getVelocityX() ) );
-    //images = images;
   }
   if ( getX() > worldWidth-getScaledWidth()) {
     setVelocityX( -fabs( getVelocityX() ) );
-    //images = imagesLeft;
   }  
 
 }

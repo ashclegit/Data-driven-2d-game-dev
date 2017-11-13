@@ -1,0 +1,29 @@
+Name: Ashwin Kumar Vajantri
+
+Course: Data-Driven 2D Game Development
+
+Clemson Email Address: aashwin@clemson.edu
+
+Project no:4
+
+Project due date:11/13/2017
+
+Project description: To Incorporate a player, Build a HUD ,Implement Collision Detection and AI.
+			References for sprites -
+                        https://sites.google.com/a/santaritaschools.org/gv-programming/home/spritesheets/runner2x5
+			http://andenginefromscratch.blogspot.com/2011/03/introduccion-andengine-parte-iv.html
+			https://dribbble.com/shots/1649485-green-dragonfly-game-character-sprite-sheets
+			http://www.stuff-o-matic.com/pack-my-sprites/
+  
+			This project includes one main sprite which is the player which happens to be my subject sprite. 
+                        All the flying bid sprites are smart sprites which will move away when the player approaches them and 
+                        also collision is indicated ,when the player collides one of them. The ball is supposed to be the dummy 
+                        sprites which will not move away when the player approaches and only displays collision when collided.
+			And when the player approaches more near , the smartsprite will collide and dissapear.  
+
+
+The easiest part of this project: The advantage of having a predefined framework facilitated the changes easy. 
+
+Game Description - I am planning to design a game with  my current player which is a ninja which will have a sword and an unlimited amount of dagger which he can throw. The basic gameline involves killing the enemy ninja and other main monks who will breathe fire. The player is able to move forward and backward andjump . When my main ninja kills the enemies , the score will increase . When the score increases a certain value, I am planning to move the game to a boss stage. In this stage , the Ninja has to kill the boss and rescue the princess. 
+
+Problems that I had in completing this project: Selecting the player and implementing the AI.

@@ -31,7 +31,6 @@ protected:
   std::vector<Image *> imagesLeft;
   std::vector<Image *> images;
   
-  //std::vector<Image *> imagesRight;
   unsigned currentFrame;
   unsigned numberOfFrames;
   unsigned frameInterval;

@@ -12,15 +12,12 @@
 #include "collisionStrategy.h"
 
 class CollisionStrategy;
-class SmartSprite;
-class SubjectSprite;
 
 class Engine {
 public:
   Engine ();
   ~Engine ();
   void play();
-  //void switchSprite();
 
 private:
   const RenderContext* rc;
@@ -33,8 +30,9 @@ private:
   World snowhill;
   Viewport& viewport;
   
-  Player* player;
-  std::vector<Drawable*> spriteVec;
+  SubjectSprite* player;
+  std::vector<SmartSprite*> spriteVec;
+  std::vector<Drawable*> sprites;
   std::vector<CollisionStrategy*> strategies;
 
 
@@ -42,7 +40,7 @@ private:
 
   Hud& hu;
   bool collision;
-  bool showHud;
+  bool displayHud;
   bool makeVideo;
 
   void draw() const;

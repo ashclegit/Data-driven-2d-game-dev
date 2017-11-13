@@ -39,5 +39,6 @@ protected:
 
   void advanceFrame(Uint32 ticks);
   MultiSprite& operator=(const MultiSprite&);
+  Vector2f makeVelocity(int, int) const;
 };
 #endif

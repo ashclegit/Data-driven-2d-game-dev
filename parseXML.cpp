@@ -34,12 +34,6 @@ void ParseXML::parseXML() {
 }
 
 void ParseXML::displayData() const {
-  /*std::map<string, string>::const_iterator ptr = xmlData.begin();
-  while ( ptr != xmlData.end() ) {
-    std::cout << '(' << ptr->first << ", " 
-                     << ptr->second << ')' << std::endl;
-    ++ptr;
-  }*/
 
   for (auto& xdata : xmlData)
   {

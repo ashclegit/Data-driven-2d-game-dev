@@ -2,13 +2,13 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<title>The Tracker Framework</title>
+<title>The Tracker Framework- aashwin</title>
 <maxStringSize>50</maxStringSize>
 
 <frameCapOn>true</frameCapOn>
 <period>17</period>
 
-<maxFrames>300</maxFrames>
+<maxFrames>1020</maxFrames>
 <username>aashwin</username>
 
 <view>
@@ -96,7 +96,8 @@
   <frameInterval>50</frameInterval>
   <speedX>250</speedX>
   <speedY>250</speedY>
-  <safeDistance>100</safeDistance>
+  <enemies>4</enemies>
+  <safeDistance>165</safeDistance>
   <transparency>false</transparency>
 </FlyingBird>
 
@@ -119,9 +120,9 @@
   <startLoc x="65" y="145"/>
   <imageWidth>75</imageWidth>
   <imageHeight>58</imageHeight>
-  <speedX>50</speedX>
-  <speedY>50</speedY>
-  <safeDistance>100</safeDistance>
+  <speedX>200</speedX>
+  <speedY>200</speedY>
+  <safeDistance>200</safeDistance>
   <transparency>false</transparency>
 </Ball>
 

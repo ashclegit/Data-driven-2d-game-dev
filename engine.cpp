@@ -20,9 +20,14 @@ Engine::~Engine() {
 
   delete player;
 
-  for ( Drawable* sprite : spriteVec ) {
+  for ( SmartSprite* sprite : spriteVec ) {
     delete sprite;
   }
+
+  for ( Drawable* simplesprite : sprites ) {
+    delete simplesprite;
+  }
+
 
   for ( CollisionStrategy* strategy : strategies ) {
     delete strategy;
@@ -39,26 +44,34 @@ Engine::Engine() :
   trees("trees", Gamedata::getInstance().getXmlInt("trees/factor") ),
   snowhill("snowhill", Gamedata::getInstance().getXmlInt("snowhill/factor") ),
   viewport( Viewport::getInstance() ),
-  player(new Player("Fighter")),
+  player(new SubjectSprite("Fighter")),
   spriteVec(),
+  sprites(),
   strategies(),
   currentStrategy(0),
   hu(Hud::getInstance()),
   collision(false),
-  showHud(false),
+  displayHud(false),
   makeVideo( true )
 {
-  spriteVec.reserve(2);
-  //spriteVec.emplace_back(new Sprite("Ball"));
-  //spriteVec.emplace_back(new Player("Fighter"));
-  //spriteVec.emplace_back(new TwoWaySprite("FlyingBird"));
-  //sprites.reserve(2);
-  /*Vector2f pos = player->getPosition();
+  spriteVec.reserve(4);
+  sprites.reserve(2);
+  Vector2f pos = player->getPosition();
   int w = player->getScaledWidth();
   int h = player->getScaledHeight();
-  sprites.push_back( new SmartSprite("Ball", pos, w, h) );
-  player->attach( sprites[0] );*/
-  spriteVec.emplace_back(new TwoWaySprite("FlyingBird"));
+  int n = Gamedata::getInstance().getXmlInt("FlyingBird/enemies");
+
+  for ( int i=0 ; i < 2 ; i++)
+  {
+    sprites.push_back( new Sprite("Ball"));
+  }
+
+  //sprites.push_back( new Sprite("Ball"));
+  for ( int i=0 ; i < n ; i++)
+  {
+    spriteVec.push_back( new SmartSprite("FlyingBird", pos, w, h) );
+    player->attach( spriteVec[i] );
+  }
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
@@ -74,84 +87,93 @@ void Engine::draw() const {
   snowhill.draw();
   trees.draw();
 
-  if (showHud || clock.getSeconds() < 3)
+  if (displayHud || clock.getSeconds() < 3)
   {
   	hu.drawHud(renderer);
   }
-  /*for(auto spritePtr : spriteVec)
+  for(auto spritePtr : sprites)
   {
     spritePtr->draw();
-  }*/
+  }
 
 
-  IOmod::getInstance().writeText("Press m to change strategy", 500, 60);
+  IOmod::getInstance().writeText("Press m to change strategy", 30, 25);
   for ( const Drawable* sprite : spriteVec ) {
     sprite->draw();
   }
+  std::stringstream strm;
+  strm << spriteVec.size() << " Smart Sprites Remaining";
+  IOmod::getInstance().writeText(strm.str(), 30, 125);
 
   strategies[currentStrategy]->draw();
   if ( collision ) {
-    std::cout << "In collision" << std::endl;
-    IOmod::getInstance().writeText("Oops: Collision", 500, 90);
+    IOmod::getInstance().writeText("Oops: Collision", 30, 50);
   }
 
   player->draw();
-  /*float fps = clock.getFps();
+  float fps = clock.getFps();
 
   fpstr << "FrameRate: " << fps;
 
-  io.writeText(fpstr.str(),30,55);
+  io.writeText(fpstr.str(),30,100);
 
   std::string uname = "Ashwin Kumar Vajantri";
 
-  SDL_Color nameColor = {255,69,0,0};
+  SDL_Color nameColor = {255,255,0,0};
 
-  io.writeText(uname,30,450,nameColor);*/
+  io.writeText(uname,30,450,nameColor);
 
-  viewport.draw();
+  //viewport.draw();
   SDL_RenderPresent(renderer);
 }
 
-/*void Engine::checkForCollisions() {
+void Engine::checkForCollisions() {
+  collision = false;
+  for ( const SmartSprite* d : spriteVec ) {
+    if ( strategies[currentStrategy]->execute(*player, *d) ) {
+      collision = true;
+    }
+  }
+  for ( const Drawable* d : sprites ) {
+    if ( strategies[currentStrategy]->execute(*player, *d) ) {
+      collision = true;
+    }
+  }
+
+  if ( collision ) {
+    player->collided();
+  }
+  else {
+    player->missed();
+    collision = false;
+  }
   auto it = spriteVec.begin();
   while ( it != spriteVec.end() ) {
     if ( strategies[currentStrategy]->execute(*player, **it) ) {
       SmartSprite* doa = *it;
       player->detach(doa);
       delete doa;
-      it = sprites.erase(it);
+      it = spriteVec.erase(it);
     }
     else ++it;
   }
-}*/
+}
 
 void Engine::update(Uint32 ticks) {
 
-  //checkForCollisions();
-  for ( Drawable* sprite : spriteVec ) {
+  checkForCollisions();
+  for ( SmartSprite* sprite : spriteVec ) {
     sprite->update( ticks );
   }
   player->update(ticks);
-  
+  for ( Drawable* simplesprite : sprites ) {
+    simplesprite->update( ticks );
+  }
+
   trees.update();
   snowhill.update(); 
   viewport.update(); // always update viewport last
 }
-
-
-
-/*void Engine::switchSprite(){
-  ++currentSprite;
-  currentSprite = currentSprite % 2;
-  if ( currentSprite ) {
-    Viewport::getInstance().setObjectToTrack(spriteVec[currentSprite]);
-  }
-  else {
-    Viewport::getInstance().setObjectToTrack(spriteVec[currentSprite]);
-  }
-}*/
-
-
 
 void Engine::play() {
   SDL_Event event;
@@ -174,18 +196,15 @@ void Engine::play() {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
-        /*if ( keystate[SDL_SCANCODE_T] ) {
-          //switchSprite();
-        }*/
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();
         }
-        if (keystate[SDL_SCANCODE_F1] && !showHud)
+        if (keystate[SDL_SCANCODE_F1] && !displayHud)
         {
-        	showHud = true;
+        	displayHud = true;
         }
-        else if(keystate[SDL_SCANCODE_F1] && showHud) {
-        	showHud = false;
+        else if(keystate[SDL_SCANCODE_F1] && displayHud) {
+        	displayHud = false;
         }
 
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {

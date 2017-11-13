@@ -1,9 +1,10 @@
 #ifndef PLAYER__H
 #define PLAYER__H
 
-#include "multisprite.h"
 
-class Player : public MultiSprite {
+#include "twoWaySprite.h"
+
+class Player : public TwoWaySprite {
 public:
   Player(const std::string&);
   Player(const Player&);
